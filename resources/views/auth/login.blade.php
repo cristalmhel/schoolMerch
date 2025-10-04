@@ -11,8 +11,8 @@
 
             <!-- Email Address -->
             <div class="form-group">
-                <label class="text-white" for="student-id">Student Email</label>
-                <input type="email" name="email" required autofocus autocomplete="username" placeholder="Enter your student email">
+                <label class="text-white" for="student-id">Email</label>
+                <input type="email" name="email" required autofocus autocomplete="username" placeholder="Enter your email">
                 <x-input-error :messages="$errors->get('email')" class="mt-2 text-red-500" />
             </div>
 

@@ -20,7 +20,7 @@
       <ul>
         <li><a href="">Home</a></li>
         @auth
-          <li><a href="">Shop</a></li>
+          <li><a href="{{ route('shop') }}">Shop</a></li>
         @else
           <li><a href="{{ route('login') }}">Shop</a></li>
         @endauth
@@ -30,7 +30,9 @@
     </nav>
     <div>
       @auth
-        <a href="{{ url('/dashboard') }}" class="login-btn">Dashboard</a>
+        @if (Auth::user()->role !== 'student')
+            <a href="{{ url('/dashboard') }}" class="login-btn">Dashboard</a>
+        @endif
       @else
         <a href="{{ route('login') }}" class="login-btn">Login</a>
 
@@ -52,8 +54,8 @@
       <p>Your One-Stop Shop for Student Merchandise – Trendy, Quality, and Budget-Friendly!</p>
       <div class="hero-buttons">
         @auth
-          <a href="" class="btn-shop">Shop Now</a>
-          <a href="" class="btn-view">View Catalog</a>
+          <a href="{{ route('shop') }}" class="btn-shop">Shop Now</a>
+          <a href="{{ route('shop') }}" class="btn-view">View Catalog</a>
         @else
           <a href="{{ route('login') }}" class="btn-shop">Shop Now</a>
           <a href="{{ route('login') }}" class="btn-view">View Catalog</a>

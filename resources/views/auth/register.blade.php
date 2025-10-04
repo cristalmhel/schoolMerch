@@ -174,12 +174,6 @@
                             </div>
                         </div>
 
-                        <div>
-                            <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
-                            <textarea id="address" name="address" rows="3" class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
-                            <x-input-error :messages="$errors->get('address')" class="mt-2" />
-                        </div>
-
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Year</label>
@@ -214,6 +208,12 @@
                                 </select>
                                 <x-input-error :messages="$errors->get('department')" class="mt-2" />
                             </div>
+                        </div>
+
+                        <div>
+                            <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+                            <textarea id="address" name="address" rows="3" class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
+                            <x-input-error :messages="$errors->get('address')" class="mt-2" />
                         </div>
 
                         <div class="flex flex-col sm:flex-row justify-end gap-4 pt-4">
