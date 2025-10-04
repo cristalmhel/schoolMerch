@@ -1,0 +1,112 @@
+/* Import landing page specific styles */
+@import "./landingpage.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* login page */
+.background {
+    background-color: #e9ebf6;
+    height: calc(100vh - 65px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.3;
+}
+
+.circle.red { background: #ff5722; width: 70px; height: 70px; top: 20%; left: 10%; }
+.circle.blue { background: #3f51b5; width: 90px; height: 90px; top: 30%; right: 15%; }
+.circle.green { background: #009688; width: 60px; height: 60px; bottom: 20%; left: 15%; }
+.circle.orange { background: #ff9800; width: 70px; height: 70px; bottom: 15%; right: 10%; }
+
+.login-card {
+    background: #213448;
+    padding: 40px;
+    width: 350px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.login-card h2 {
+    font-size: 22px;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.login-card p {
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    background: #94B4C1;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.login-btn:hover {
+    background: #547792;
+}
+.forgot {
+    display: block;
+    margin: 12px 0;
+    font-size: 13px;
+    color: #D3DAD9;
+    text-decoration: none;
+}
+
+.signup {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #fff;
+}
+
+.signup a {
+    color: #D3DAD9;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/** -------------------------------**/
+
+
+
+
