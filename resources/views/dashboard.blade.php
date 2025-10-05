@@ -1,17 +1,41 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.sidebar')
 
-    <div class="py-8">
-        <div class="mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
+@section('content')
+<div class="flex justify-between items-center">
+    <div>
+        <h1 class="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
+        <p class="text-gray-500">Manage your merchandise and users</p>
     </div>
-</x-app-layout>
+    <div class="bg-green-100 text-green-700 px-4 py-2 rounded-full flex items-center">
+        <span class="h-3 w-3 bg-green-600 rounded-full mr-2"></span> System Online
+    </div>
+</div>
+
+<hr class="my-6">
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="bg-white rounded-xl shadow p-6 text-center">
+        <h2 class="text-gray-600 font-semibold">Total Products</h2>
+        <p class="text-4xl font-bold text-gray-900 mt-2">127</p>
+        <p class="text-sm text-gray-500 mt-1">Active items</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-6 text-center">
+        <h2 class="text-gray-600 font-semibold">Total Users</h2>
+        <p class="text-4xl font-bold text-gray-900 mt-2">89</p>
+        <p class="text-sm text-gray-500 mt-1">Registered students</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-6 text-center">
+        <h2 class="text-gray-600 font-semibold">Departments</h2>
+        <p class="text-4xl font-bold text-gray-900 mt-2">12</p>
+        <p class="text-sm text-gray-500 mt-1">Active categories</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-6 text-center">
+        <h2 class="text-gray-600 font-semibold">Revenue</h2>
+        <p class="text-4xl font-bold text-gray-900 mt-2">₱45K</p>
+        <p class="text-sm text-gray-500 mt-1">This month</p>
+    </div>
+</div>
+@endsection

@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('landing');
@@ -20,5 +23,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// Manage Products
+Route::resource('products', ProductController::class)->middleware(['auth']);
+
+// Manage Departments
+Route::resource('departments', DepartmentController::class)->middleware(['auth']);
+
+// Manage Users
+Route::resource('users', UserController::class)->middleware(['auth']);
 
 require __DIR__.'/auth.php';
