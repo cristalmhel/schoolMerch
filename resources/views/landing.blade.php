@@ -31,7 +31,7 @@
     <div>
       @auth
         @if (Auth::user()->role !== 'student')
-            <a href="{{ url('/dashboard') }}" class="login-btn">Dashboard</a>
+            <a href="{{ route('dashboard.index') }}" class="login-btn">Dashboard</a>
         @endif
       @else
         <a href="{{ route('login') }}" class="login-btn">Login</a>

@@ -37,7 +37,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         // Default: admins, super_admin
-        return redirect()->intended('/dashboard');
+        return redirect()->intended(route('dashboard.index'));
     }
 
     /**

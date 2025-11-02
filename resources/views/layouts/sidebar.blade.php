@@ -24,7 +24,7 @@
                     <p class="text-gray-400 text-sm">Management System</p>
                 </div>
                 <nav class="mt-6 space-y-1 px-4">
-                    <a href="{{ route('dashboard') }}" 
+                    <a href="{{ route('dashboard.index') }}" 
                     class="flex items-center px-6 py-3 rounded-lg transition duration-200 
                             {{ request()->routeIs('dashboard') 
                                     ? 'bg-blue-600 text-white' 

@@ -158,17 +158,16 @@
                                 <label for="course" class="block text-sm font-medium text-gray-700">
                                     Course
                                 </label>
-                                <select
+                                <select 
+                                    name="course" 
                                     id="course"
-                                    name="course"
                                     required
-                                    class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                    class="form-select w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 >
-                                    <option value="" disabled selected hidden>Select Course</option>
-                                    <option value="bsit">BS Information Technology</option>
-                                    <option value="bsba">BS Business Administration</option>
-                                    <option value="bsee">BS Electrical Engineering</option>
-                                    <option value="bsed">BS Education</option>
+                                    <option value="" disabled selected hidden>-- Select College Course --</option>
+                                    @foreach(config('constants.college_courses') as $key => $course)
+                                        <option value="{{ $key }}">{{ $course }}</option>
+                                    @endforeach
                                 </select>
                                 <x-input-error :messages="$errors->get('course')" class="mt-2" />
                             </div>
@@ -194,17 +193,16 @@
                             </div>
                             <div class="lg:col-span-2">
                                 <label class="block text-sm font-medium text-gray-700">College Department</label>
-                                <select
-                                    id="department"
+                                <select 
                                     name="department"
+                                    id="department"
                                     required
-                                    class="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                    class="form-select w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 >
-                                    <option value="" disabled selected hidden>Select Department</option>
-                                    <option value="College of Computer Studies">College of Computer Studies</option>
-                                    <option value="College of Computer Engineering">College of Computer Engineering</option>
-                                    <option value="College of Criminology">College of Criminology</option>
-                                    <option value="College of Education">College of Education</option>
+                                    <option value="" disabled selected hidden>-- Select College Department --</option>
+                                    @foreach(config('constants.college_departments') as $key => $department)
+                                        <option value="{{ $key }}">{{ $department }}</option>
+                                    @endforeach
                                 </select>
                                 <x-input-error :messages="$errors->get('department')" class="mt-2" />
                             </div>

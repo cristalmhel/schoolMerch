@@ -15,7 +15,7 @@
         <div class="hidden sm:flex sm:items-center sm:space-x-8">
             <!-- Nav Links -->
             <a href="/" class="hover:text-gray-300 transition">Home</a>
-            <a href="" class="hover:text-gray-300 transition">Shop</a>
+            <a href="/shop" class="hover:text-gray-300 transition">Shop</a>
             <a href="" class="hover:text-gray-300 transition">About</a>
             <a href="" class="hover:text-gray-300 transition">Contact</a>
 
@@ -89,7 +89,7 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden text-white sm:hidden">
         <div class="pt-2 pb-3 flex flex-col space-y-2 text-white">
             <a href="/" class="hover:text-gray-300 transition px-3 py-2 rounded-md">Home</a>
-            <a href="" class="hover:text-gray-300 transition px-3 py-2 rounded-md">Shop</a>
+            <a href="/shop" class="hover:text-gray-300 transition px-3 py-2 rounded-md">Shop</a>
             <a href="" class="hover:text-gray-300 transition px-3 py-2 rounded-md">About</a>
             <a href="" class="hover:text-gray-300 transition px-3 py-2 rounded-md">Contact</a>        
         </div>

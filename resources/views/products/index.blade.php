@@ -98,9 +98,14 @@
                                 </span>
                             </td>
                             <td class="p-1 text-center space-x-2">
-                                <a href="#" class="bg-cyan-600 hover:bg-cyan-700 text-white px-2 py-1 rounded text-sm">View</a>
-                                <a href="#" class="bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded text-sm">Edit</a>
-                                <a href="#" class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-sm">Delete</a>
+                                <a href="{{ route('products.show', $product->id) }}" class="bg-cyan-600 hover:bg-cyan-700 text-white px-2 py-1 rounded text-sm">View</a>
+                                <a href="{{ route('products.edit', $product->id) }}" class="bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded text-sm">Edit</a>
+                                <button 
+                                    type="button" 
+                                    onclick="confirmDelete({{ $product->id }}, '{{ $product->product_name }}')"
+                                    class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-sm font-medium transition">
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                     @empty
@@ -125,4 +130,65 @@
     </script>
 
 </div>
+
+{{-- Delete Confirmation Modal --}}
+<div id="deleteModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 overflow-y-auto h-full w-full z-50">
+    <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+        <div class="mt-3 text-center">
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Delete Product</h3>
+            <div class="mt-2 px-7 py-3">
+                <p id="modal-text" class="text-sm text-gray-500">
+                    Are you sure you want to delete the product? This action cannot be undone.
+                </p>
+            </div>
+            <div class="items-center px-4 py-3">
+                {{-- Form for DELETE request --}}
+                <form id="deleteForm" method="POST" action="" class="inline w-full"> 
+                    @csrf
+                    @method('DELETE')
+                    
+                    {{-- Use Flexbox to align and space the buttons --}}
+                    <div class="flex justify-between space-x-4"> 
+                        <button type="button" onclick="closeModal()" class="flex-1 px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                            Cancel
+                        </button>
+                        <button type="submit" class="flex-1 px-4 py-2 bg-red-600 text-white text-base font-medium rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-300">
+                            Delete
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById('deleteModal');
+    const deleteForm = document.getElementById('deleteForm');
+    const modalText = document.getElementById('modal-text');
+
+    function confirmDelete(productId, productName) {
+        // 1. Set the action URL for the form to the correct route
+        // Assuming your base route is /products/{id}
+        const url = `/products/${productId}`; 
+        deleteForm.action = url;
+
+        // 2. Update the modal text
+        modalText.innerHTML = `Are you sure you want to delete the product **${productName}**? This action cannot be undone.`;
+
+        // 3. Show the modal
+        modal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+        modal.classList.add('hidden');
+    }
+    
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            closeModal();
+        }
+    }
+</script>
 @endsection
