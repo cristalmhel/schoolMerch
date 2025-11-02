@@ -59,7 +59,7 @@
             </div>
 
             <div class="p-4">
-                <a href="{{ route('shop') }}"
+                <a href="/shop"
                 class="mb-4 block text-center bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 rounded-lg shadow transition duration-200">
                     🛒 Go to Shop
                 </a>

@@ -55,6 +55,12 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+         $request->merge([
+            'is_featured' => $request->boolean('is_featured'),
+            'is_limited' => $request->boolean('is_limited'),
+            'available_online' => $request->boolean('available_online'),
+        ]);
+
         // Validate input
         $validated = $request->validate([
             'product_name' => 'required|string|max:255',
@@ -87,9 +93,9 @@ class ProductController extends Controller
         }
 
         // Default booleans
-        $validated['is_featured'] = $request->has('is_featured');
-        $validated['is_limited'] = $request->has('is_limited');
-        $validated['available_online'] = $request->has('available_online') ? true : false;
+        $validated['is_featured'] = $request->boolean('is_featured');
+        $validated['is_limited'] = $request->boolean('is_limited');
+        $validated['available_online'] = $request->boolean('available_online');
 
         // 🔹 Auto-generate Product ID
         $lastProduct = Product::latest('id')->first();
@@ -124,6 +130,12 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::findOrFail($id);
+
+        $request->merge([
+            'is_featured' => $request->boolean('is_featured'),
+            'is_limited' => $request->boolean('is_limited'),
+            'available_online' => $request->boolean('available_online'),
+        ]);
         
         $validated = $request->validate([
             'product_name' => 'required|string|max:255',
@@ -162,9 +174,9 @@ class ProductController extends Controller
         }
 
         // Default booleans
-        $validated['is_featured'] = $request->has('is_featured');
-        $validated['is_limited'] = $request->has('is_limited');
-        $validated['available_online'] = $request->has('available_online') ? true : false;
+        $validated['is_featured'] = $request->boolean('is_featured');
+        $validated['is_limited'] = $request->boolean('is_limited');
+        $validated['available_online'] = $request->boolean('available_online');
 
         $product->update($validated);
 

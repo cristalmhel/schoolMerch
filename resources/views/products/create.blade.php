@@ -145,15 +145,15 @@
             <h2 class="text-lg font-semibold text-gray-700 mb-2">Additional Settings</h2>
             <div class="flex flex-col sm:flex-row sm:space-x-6 space-y-2 sm:space-y-0">
                 <label class="flex items-center space-x-2">
-                    <input type="checkbox" name="featured" class="text-blue-600 focus:ring-blue-500">
+                    <input type="checkbox" name="is_featured" class="text-blue-600 focus:ring-blue-500">
                     <span class="text-gray-700">Featured Product</span>
                 </label>
                 <label class="flex items-center space-x-2">
-                    <input type="checkbox" name="limited" class="text-blue-600 focus:ring-blue-500">
+                    <input type="checkbox" name="is_limited" class="text-blue-600 focus:ring-blue-500">
                     <span class="text-gray-700">Limited Edition</span>
                 </label>
                 <label class="flex items-center space-x-2">
-                    <input type="checkbox" name="online" checked class="text-blue-600 focus:ring-blue-500">
+                    <input type="checkbox" name="available_online" class="text-blue-600 focus:ring-blue-500">
                     <span class="text-gray-700">Available for Online Orders</span>
                 </label>
             </div>

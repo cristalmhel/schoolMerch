@@ -20,7 +20,7 @@
       <ul>
         <li><a href="">Home</a></li>
         @auth
-          <li><a href="{{ route('shop') }}">Shop</a></li>
+          <li><a href="{{ route('shop.index') }}">Shop</a></li>
         @else
           <li><a href="{{ route('login') }}">Shop</a></li>
         @endauth
@@ -54,8 +54,8 @@
       <p>Your One-Stop Shop for Student Merchandise – Trendy, Quality, and Budget-Friendly!</p>
       <div class="hero-buttons">
         @auth
-          <a href="{{ route('shop') }}" class="btn-shop">Shop Now</a>
-          <a href="{{ route('shop') }}" class="btn-view">View Catalog</a>
+          <a href="{{ route('shop.index') }}" class="btn-shop">Shop Now</a>
+          <a href="{{ route('shop.index') }}}" class="btn-view">View Catalog</a>
         @else
           <a href="{{ route('login') }}" class="btn-shop">Shop Now</a>
           <a href="{{ route('login') }}" class="btn-view">View Catalog</a>

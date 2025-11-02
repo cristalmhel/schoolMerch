@@ -92,7 +92,16 @@
 
                         <dt class="text-gray-500 font-medium">Featured Product:</dt>
                         <dd class="text-gray-900">
-                            @if($product->featured)
+                            @if($product->is_featured)
+                                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">Yes</span>
+                            @else
+                                <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">No</span>
+                            @endif
+                        </dd>
+
+                        <dt class="text-gray-500 font-medium">Limited Edition:</dt>
+                        <dd class="text-gray-900">
+                            @if($product->is_limited)
                                 <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">Yes</span>
                             @else
                                 <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">No</span>
@@ -101,7 +110,7 @@
                         
                         <dt class="text-gray-500 font-medium">Online Orders:</dt>
                         <dd class="text-gray-900">
-                            @if($product->online)
+                            @if($product->available_online)
                                 <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Available</span>
                             @else
                                 <span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">Unavailable</span>

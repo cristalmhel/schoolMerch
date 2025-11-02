@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DepartmentController;
@@ -11,9 +12,7 @@ Route::get('/', function () {
     return view('landing');
 });
 
-Route::get('/shop', function () {
-    return view('shop');
-})->middleware(['auth', 'verified'])->name('shop');
+Route::get('/shop', [ShopController::class, 'index'])->name('shop.index')->middleware(['auth', 'verified']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard.index')
