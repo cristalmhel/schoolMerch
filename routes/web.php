@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 
@@ -28,8 +28,8 @@ Route::middleware('auth')->group(function () {
 // Manage Products
 Route::resource('products', ProductController::class)->middleware(['auth']);
 
-// Manage Departments
-Route::resource('departments', DepartmentController::class)->middleware(['auth']);
+// Manage Orders
+Route::resource('orders', OrderController::class)->middleware(['auth']);
 
 // Manage Users
 Route::resource('users', UserController::class)->middleware(['auth']);

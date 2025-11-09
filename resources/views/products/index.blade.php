@@ -28,14 +28,17 @@
                 placeholder="Search by name, ID, or description..." 
                 class="w-96 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-blue-200"
             >
-            
-            <select name="department" class="w-48 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-blue-200">
-                <option value="">All Departments</option>
-                <option value="BSIT" {{ request('department') == 'BSIT' ? 'selected' : '' }}>BSIT</option>
-                <option value="BSED" {{ request('department') == 'BSED' ? 'selected' : '' }}>BSED</option>
-                <option value="BSA"  {{ request('department') == 'BSA' ? 'selected' : '' }}>BSA</option>
-                <option value="BSBA" {{ request('department') == 'BSBA' ? 'selected' : '' }}>BSBA</option>
-            </select>
+
+            @auth
+                @if(auth()->user()->role === 'super_admin')
+                    <select name="department" class="w-48 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-blue-200">
+                        <option value="">All Departments</option>
+                        @foreach(config('constants.college_departments') as $key => $department)
+                            <option value="{{ $key }}">{{ $department }}</option>
+                        @endforeach
+                    </select>
+                @endif
+            @endauth
 
             <select name="price_range" class="w-40 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-blue-200">
                 <option value="">₱0 - ₱1000+</option>

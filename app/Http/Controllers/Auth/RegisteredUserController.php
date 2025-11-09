@@ -67,6 +67,6 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         // ✅ Redirect to dashboard or wherever you want
-        return redirect()->route('shop');
+        return redirect()->route('shop.index');
     }
 }

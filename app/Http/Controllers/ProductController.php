@@ -22,10 +22,15 @@ class ProductController extends Controller
             });
         }
 
-        // 🏫 Department
-        if ($department = $request->input('department')) {
-            $query->where('department', $department);
-        }
+        // 🏫 Department filter
+        $query->when(auth()->user()->role !== 'super_admin', function ($q) {
+            // Non-super-admin users are restricted to their own department
+            $q->where('department', auth()->user()->department);
+        })
+        ->when(auth()->user()->role === 'super_admin' && $request->input('department'), function ($q, $department) {
+            // Super-admin can filter by request department
+            $q->where('department', $department);
+        });
 
         // 💰 Price range
         if ($range = $request->input('price_range')) {

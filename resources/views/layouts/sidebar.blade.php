@@ -40,21 +40,24 @@
                         📦 <span class="ml-3 text-sm font-medium">Manage Products</span>
                     </a>
 
-                    <a href="{{ route('departments.index') }}" 
+                    <a href="{{ route('orders.index') }}" 
                     class="flex items-center px-6 py-3 rounded-lg transition duration-200 
-                            {{ request()->routeIs('departments.*') 
+                            {{ request()->routeIs('orders.*') 
                                     ? 'bg-blue-600 text-white' 
                                     : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
-                        🏢 <span class="ml-3 text-sm font-medium">Manage Departments</span>
+                        🏢 <span class="ml-3 text-sm font-medium">Manage Orders</span>
                     </a>
-
-                    <a href="{{ route('users.index') }}" 
-                    class="flex items-center px-6 py-3 rounded-lg transition duration-200 
-                            {{ request()->routeIs('users.*') 
-                                    ? 'bg-blue-600 text-white' 
-                                    : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
-                        👥 <span class="ml-3 text-sm font-medium">Manage Users</span>
-                    </a>
+                    @auth
+                        @if (Auth::user()->role === 'super_admin')
+                            <a href="{{ route('users.index') }}" 
+                            class="flex items-center px-6 py-3 rounded-lg transition duration-200 
+                                    {{ request()->routeIs('users.*') 
+                                            ? 'bg-blue-600 text-white' 
+                                            : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
+                                👥 <span class="ml-3 text-sm font-medium">Manage Users</span>
+                            </a>
+                        @endif
+                    @endauth
                 </nav>
             </div>
 
