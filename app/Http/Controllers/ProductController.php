@@ -77,7 +77,7 @@ class ProductController extends Controller
             'category' => 'nullable|string|max:100',
             'department' => 'nullable|string|max:100',
             'color' => 'nullable|string|max:50',
-            'available_sizes' => 'nullable|array', // expecting array input like ['S', 'M', 'L']
+            'available_sizes' => 'nullable|string',
             'status' => 'required|in:Active,Inactive,Low,Out',
             'is_featured' => 'nullable|boolean',
             'is_limited' => 'nullable|boolean',
@@ -85,10 +85,7 @@ class ProductController extends Controller
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Convert sizes array to CSV if provided
-        if (isset($validated['available_sizes'])) {
-            $validated['available_sizes'] = implode(',', $validated['available_sizes']);
-        }
+        $product->available_sizes = array_map('trim', explode(',', $request->available_sizes));
 
         // Handle image upload if provided
         if ($request->hasFile('image_path')) {
@@ -150,17 +147,13 @@ class ProductController extends Controller
             'category' => 'nullable|string|max:100',
             'department' => 'nullable|string|max:100',
             'color' => 'nullable|string|max:50',
-            'available_sizes' => 'nullable|array', // expecting array input like ['S', 'M', 'L']
+            'available_sizes' => 'nullable|string',
             'status' => 'required|in:Active,Inactive,Low,Out',
             'is_featured' => 'nullable|boolean',
             'is_limited' => 'nullable|boolean',
             'available_online' => 'nullable|boolean',
             'image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-        // Convert sizes array to CSV if provided
-        if (isset($validated['available_sizes'])) {
-            $validated['available_sizes'] = implode(',', $validated['available_sizes']);
-        }
 
         // Handle image upload if provided
         if ($request->hasFile('image_path')) {
@@ -182,6 +175,7 @@ class ProductController extends Controller
         $validated['is_featured'] = $request->boolean('is_featured');
         $validated['is_limited'] = $request->boolean('is_limited');
         $validated['available_online'] = $request->boolean('available_online');
+        $product->available_sizes = array_map('trim', explode(',', $request->available_sizes));
 
         $product->update($validated);
 

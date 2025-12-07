@@ -85,7 +85,9 @@
                         <dd class="text-gray-900">{{ $product->color ?? 'N/A' }}</dd>
 
                         <dt class="text-gray-500 font-medium">Available Sizes:</dt>
-                        <dd class="text-gray-900">{{ $product->sizes ?? 'N/A' }}</dd>
+                        <dd class="text-gray-900">
+                            {{ is_array($product->available_sizes) ? implode(', ', $product->available_sizes) : ($product->available_sizes ?? 'N/A') }}
+                        </dd>
 
                         <dt class="text-gray-500 font-medium">Status:</dt>
                         <dd class="font-semibold @if($product->status == 'Active') text-green-600 @else text-red-600 @endif">{{ $product->status }}</dd>

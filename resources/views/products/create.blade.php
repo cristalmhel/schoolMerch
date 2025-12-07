@@ -118,14 +118,20 @@
             <h2 class="text-lg font-semibold text-gray-700 mb-2">Product Attributes</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                    <label class="block text-gray-700 text-sm font-medium mb-1">Color</label>
+                    <label class="block text-gray-700 text-sm font-medium mb-1">
+                        Color
+                        <span class="text-gray-500 text-xs italic">(add comma as separator)</span>
+                    </label>
                     <input type="text" name="color" placeholder="Blue, Red, Black"
                         class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring focus:ring-blue-200 focus:outline-none">
                 </div>
 
                 <div>
-                    <label class="block text-gray-700 text-sm font-medium mb-1">Available Sizes</label>
-                    <input type="text" name="sizes" placeholder="XS, S, M, L, XL"
+                    <label class="block text-gray-700 text-sm font-medium mb-1">
+                        Available Sizes
+                        <span class="text-gray-500 text-xs italic">(add comma as separator)</span>
+                    </label>
+                    <input type="text" name="available_sizes" placeholder="XS, S, M, L, XL"
                         class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring focus:ring-blue-200 focus:outline-none">
                 </div>
 

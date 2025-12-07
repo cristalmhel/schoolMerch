@@ -94,18 +94,24 @@
                     </div>
                 @endif
 
-                <div class="w-full h-40 bg-gray-50 flex items-center justify-center rounded-lg mb-3">
+                <div 
+                    class="w-full h-40 bg-gray-50 flex items-center justify-center rounded-lg mb-3"
+                    onclick="openProductModal({{ json_encode($product) }})"
+                >
                     <img  src="{{ asset('storage/' . $product->image_path) }}"  
-                        alt="{{ $product->name }}" 
+                        alt="{{ $product->product_name }}" 
                         class="max-h-36 object-contain">
                 </div>
 
-                <h3 class="font-semibold text-gray-900 text-sm">{{ $product->name }}</h3>
+                <h3 class="font-semibold text-gray-900 text-sm">{{ $product->product_name }}</h3>
                 <p class="text-gray-500 text-xs line-clamp-2">{{ $product->description }}</p>
-                <p class="text-green-600 font-semibold text-sm mt-1">${{ number_format($product->price, 2) }}</p>
+                <p class="text-green-600 font-semibold text-sm mt-1">₱{{ number_format($product->price, 2) }}</p>
 
-                <button class="mt-3 w-full bg-blue-600 text-white text-sm font-semibold py-2 rounded-lg hover:bg-blue-700 transition">
-                    🛒 Add to Cart
+               <button 
+                    class="mt-3 w-full p-2 bg-orange-600 text-white text-sm font-semibold rounded-lg hover:bg-orange-700 transition"
+                    onclick="openProductModal({{ json_encode($product) }})"
+                >
+                    🛒 Check out
                 </button>
             </div>
         @empty
@@ -113,10 +119,359 @@
         @endforelse
     </div>
 
-
     {{-- Pagination --}}
     <div class="mt-8">
         {{ $products->withQueryString()->links() }}
     </div>
 </div>
+
+<!-- Product Details Modal -->
+<div id="productModal" 
+     class="fixed inset-0 bg-black/50 hidden justify-center items-center z-50">
+
+    <div class="bg-white w-11/12 md:w-1/2 lg:w-1/3 rounded-xl shadow-lg p-6 relative">
+
+        <!-- ✖ Close button -->
+        <button onclick="closeProductModal()" 
+                class="absolute top-2 right-2 text-gray-500 text-xl hover:text-black">
+            &times;
+        </button>
+
+        <div class="text-center mb-4">
+            <div class="relative mx-auto w-full max-w-xs overflow-hidden rounded-lg">
+                <img id="modalImage" 
+                    class="mx-auto max-h-40 object-contain transition-transform duration-300 ease-in-out hover:scale-150 cursor-zoom-in" />
+            </div>
+        </div>
+
+        <div class="text-center">
+            <h2 class="text-lg font-bold text-gray-900" id="modalName"></h2>
+            <p class="text-sm text-gray-600 mt-2" id="modalDescription"></p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 mt-4 text-sm text-gray-700">
+            <p><strong>SKU:</strong> <span id="modalSKU"></span></p>
+            <p><strong>Category:</strong> <span id="modalCategory"></span></p>
+            <p><strong>Department:</strong> <span id="modalDepartment"></span></p>
+            <p><strong>Color:</strong> <span id="modalColor"></span></p>
+            <p><strong>Sizes:</strong> <span id="modalSizes"></span></p>
+            <p class="text-center col-span-2 text-green-600 font-bold text-lg mt-1">
+                ₱<span id="modalPrice"></span>
+            </p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="mt-6 flex justify-between gap-3">
+
+            <button id="modalAddToCartBtn"
+                class="w-1/2 px-4 py-2 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700">
+                🛒 Add to Cart
+            </button>
+
+            <button id="modalBuyBtn"
+                class="w-1/2 px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700">
+                Buy Now
+            </button>
+        </div>
+
+        <!-- Fullscreen Image Viewer -->
+        <div id="imageFullscreen"
+            class="fixed inset-0 bg-black/90 hidden justify-center items-center z-[60]"
+            onclick="closeFullscreenImage()">
+
+            <img id="fullscreenImg"
+                class="max-h-[90vh] max-w-[90vw] object-contain rounded-lg shadow-xl">
+        </div>
+
+        <!-- ADD TO CART BOTTOM SHEET -->
+        <div id="bottomSheet"
+            class="fixed inset-0 bg-black/40 hidden justify-end items-end z-[60]">
+
+            <div id="sheetContent"
+                class="bg-white w-full md:w-1/2 lg:w-1/3 p-6 rounded-t-2xl shadow-2xl transform translate-y-full transition-transform duration-300">
+
+                <h2 class="text-lg font-bold text-gray-900 mb-4">Add to Cart</h2>
+
+                <!-- Size -->
+                <label class="block text-sm font-semibold text-gray-700">Select Size</label>
+                <select id="sheetSize"
+                        class="w-full border rounded-lg mt-1 p-2 text-sm">
+                </select>
+
+                <!-- Color -->
+                <label class="block text-sm font-semibold text-gray-700">Select Color</label>
+                <select id="sheetColor"
+                        class="w-full border rounded-lg mt-1 p-2 text-sm">
+                </select>
+
+                <!-- Quantity -->
+                <label class="block text-sm font-semibold text-gray-700 mt-4">Quantity</label>
+                <input type="number" id="sheetQty" value="1" min="1"
+                    class="w-full border rounded-lg mt-1 p-2 text-sm">
+
+                <!-- Action Buttons -->
+                <div id="sheetButtons" class="mt-6 flex justify-between gap-3">
+                    <button id="sheetAddCartBtn"
+                            class="w-1/2 px-4 py-3 bg-orange-600 text-white rounded-xl font-semibold hover:bg-orange-700">
+                        <span id="btn-text-add-to-cart">🛒 Add to Cart</span>
+                    </button>
+
+                    <button id="sheetBuyBtn"
+                            class="w-1/2 px-4 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700">
+                        <span id="btn-text-buy-now">💳 Buy Now</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let selectedProductId = null;
+    let currentProduct = null;
+
+    const cartCountElement = document.getElementById('cart-item-count');
+    const cartCountElementMobile = document.getElementById('cart-item-count-mobile');
+    const sheetAddCartBtn = document.getElementById('sheetAddCartBtn');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    // --- Initialization ---
+    function updateCartBadge(count) {
+        // Only update elements that actually exist
+        if (cartCountElement) {
+            cartCountElement.textContent = 'Cart (' + count + ')';
+        }
+        if (cartCountElementMobile) {
+            cartCountElementMobile.textContent = 'Cart (' + count + ')';
+        }
+
+        // Fallback if neither element exists
+        if (!cartCountElement && !cartCountElementMobile) {
+            console.log('Cart count initialized to: ' + count);
+        }
+    }
+
+    // PHP injects the number directly
+    updateCartBadge({{ App\Http\Controllers\CartController::getCartItemCount() }});
+
+    // ---------------- OPEN MAIN PRODUCT MODAL ------------------
+    function openProductModal(product) {
+
+        selectedProductId = product.id;
+        currentProduct = product;
+
+        // Fill modal info
+        document.getElementById('modalImage').src = "/storage/" + product.image_path;
+        document.getElementById('modalName').textContent = product.product_name;
+        document.getElementById('modalDescription').textContent = product.description;
+        document.getElementById('modalSKU').textContent = product.sku ?? 'N/A';
+        document.getElementById('modalCategory').textContent = product.category ?? 'N/A';
+        document.getElementById('modalDepartment').textContent = product.department ?? 'N/A';
+        document.getElementById('modalColor').textContent = product.color ?? 'N/A';
+        document.getElementById('modalSizes').textContent =
+            Array.isArray(product.available_sizes) && product.available_sizes.length
+                ? product.available_sizes.join(', ')
+                : (product.available_sizes ?? 'N/A');
+        document.getElementById('modalPrice').textContent = Number(product.price).toFixed(2);
+
+        // Show modal
+        const modal = document.getElementById('productModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+
+    // ---------------- CLOSE MAIN MODAL ------------------
+    function closeProductModal() {
+        const modal = document.getElementById('productModal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+
+    // ---------------- OPEN BOTTOM SHEET ------------------
+    // When user clicks Add to Cart in modal
+    document.getElementById('modalAddToCartBtn').addEventListener('click', function () {
+        if (currentProduct) openBottomSheet(currentProduct, "cart");
+    });
+
+    // When user clicks Buy Now in modal
+    document.getElementById('modalBuyBtn').addEventListener('click', function () {
+        if (currentProduct) openBottomSheet(currentProduct, "buy");
+    });
+
+    // mode = "buy" or "cart"
+    function openBottomSheet(product, mode = "cart") {
+        const sizeSelect = document.getElementById('sheetSize');
+        const colorSelect = document.getElementById('sheetColor');
+
+        // Clear previous options
+        sizeSelect.innerHTML = '';
+        colorSelect.innerHTML = '';
+
+        // Ensure available_sizes is an array
+        const sizes = Array.isArray(product.available_sizes) 
+        ? product.available_sizes 
+        : (product.available_sizes ? product.available_sizes.split(',').map(s => s.trim()) : []);
+
+        if (sizes.length) {
+            sizes.forEach(size => {
+                const option = document.createElement('option');
+                option.value = size;
+                option.textContent = size;
+                sizeSelect.appendChild(option);
+            });
+        } else {
+            const option = document.createElement('option');
+            option.value = '';
+            option.textContent = 'N/A';
+            sizeSelect.appendChild(option);
+        }
+
+        // handle colors
+        const colors = product.color ? product.color.split(',').map(s => s.trim()) : [];
+
+        if (colors.length) {
+            colors.forEach(color => {
+                const option = document.createElement('option');
+                option.value = color;
+                option.textContent = color;
+                colorSelect.appendChild(option);
+            });
+        } else {
+            const option = document.createElement('option');
+            option.value = '';
+            option.textContent = 'N/A';
+            colorSelect.appendChild(option);
+        }
+
+        // Show/hide buttons based on mode
+        const addCartBtn = document.getElementById('sheetAddCartBtn');
+        const buyBtn = document.getElementById('sheetBuyBtn');
+
+        if (mode === "buy") {
+            addCartBtn.style.display = "none";
+            buyBtn.style.width = "100%"; // take full width
+        } else {
+            addCartBtn.style.display = "block";
+            addCartBtn.style.width = "50%";
+            buyBtn.style.display = "block";
+            buyBtn.style.width = "50%";
+        }
+
+        // Show bottom sheet
+        const wrapper = document.getElementById('bottomSheet');
+        const sheet = document.getElementById('sheetContent');
+
+        wrapper.classList.remove('hidden');
+        wrapper.classList.add('flex');
+
+        // Slide up animation
+        setTimeout(() => {
+            sheet.classList.remove('translate-y-full');
+        }, 10);
+    }
+
+
+    // ---------------- CLOSE BOTTOM SHEET BY CLICKING SHADOW ------------------
+    document.getElementById('bottomSheet').addEventListener('click', function (e) {
+        if (e.target.id === 'bottomSheet') closeBottomSheet();
+    });
+
+    function closeBottomSheet() {
+        const wrapper = document.getElementById('bottomSheet');
+        const sheet = document.getElementById('sheetContent');
+
+        sheet.classList.add('translate-y-full');
+        setTimeout(() => {
+            wrapper.classList.add('hidden');
+            wrapper.classList.remove('flex');
+        }, 300);
+    }
+
+    // ---------------- BOTTOM SHEET: ADD TO CART (AJAX Version) ------------------
+    sheetAddCartBtn.addEventListener('click', async function () {
+        // Disable button and show loading state
+        sheetAddCartBtn.disabled = true;
+        document.getElementById('btn-text-add-to-cart').textContent = 'Adding...';
+
+        const size = document.getElementById('sheetSize').value;
+        const color = document.getElementById('sheetColor').value;
+        const qty = parseInt(document.getElementById('sheetQty').value);
+
+        // 1. Prepare data for POST request
+        const data = {
+            product_id: selectedProductId,
+            size: size,
+            color: color,
+            qty: qty,
+            _token: csrfToken // Include the CSRF token
+        };
+
+        try {
+            // 2. Send asynchronous request to the Laravel controller
+            const response = await fetch(`/cart/add/${selectedProductId}`, {
+                method: 'POST', // Use POST (as per recommendation)
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken // Also commonly sent in header
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                // 3. Request succeeded (200 status code)
+                updateCartBadge(result.cart_item_count);
+                showStatus(result.message, 'success');
+            } else {
+                // 4. Request failed (e.g., 422 validation, 500 server error)
+                const errorMsg = result.message || 'An unknown error occurred.';
+                showStatus(errorMsg, 'error');
+            }
+
+        } catch (error) {
+            // 5. Network or server connection failed
+            console.error('Fetch error:', error);
+            showStatus('Network error. Check your connection.', 'error');
+        } finally {
+            // Re-enable button
+            sheetAddCartBtn.disabled = false;
+            document.getElementById('btn-text-add-to-cart').textContent = '🛒 Add to Cart';
+            closeBottomSheet();
+        }
+    });
+    
+    // --- Initialization ---
+    // In a real Laravel app, you'd fetch the initial count here (e.g., using the static helper)
+    // For this demo, we initialize to 0.
+    // updateCartBadge(<?php // echo App\Http\Controllers\CartController::getCartItemCount(); ?>); 
+    // updateCartBadge(0);
+
+    // ---------------- BOTTOM SHEET: BUY NOW ------------------
+    document.getElementById('sheetBuyBtn').addEventListener('click', function () {
+
+        const size = document.getElementById('sheetSize').value;
+        const color = document.getElementById('sheetColor').value;
+        const qty = document.getElementById('sheetQty').value;
+        
+        window.location.href = '{{ route("orders.create") }}' 
+            + `?selectedProductId=${selectedProductId}&size=${size}&color=${color}&qty=${qty}`;
+    });
+
+    // Open fullscreen image on click
+    document.getElementById('modalImage').addEventListener('click', function () {
+        document.getElementById('fullscreenImg').src = this.src;
+        document.getElementById('imageFullscreen').classList.remove('hidden');
+        document.getElementById('imageFullscreen').classList.add('flex');
+    });
+
+    // Close fullscreen when clicking anywhere
+    function closeFullscreenImage() {
+        document.getElementById('imageFullscreen').classList.add('hidden');
+        document.getElementById('imageFullscreen').classList.remove('flex');
+    }
+</script>
+
+
+
 </x-app-layout>

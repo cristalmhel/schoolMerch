@@ -32,7 +32,7 @@
 
     <div class="bg-white rounded-xl shadow p-6 text-center">
         <h2 class="text-gray-600 font-semibold">Total Orders</h2>
-        <p class="text-4xl font-bold text-gray-900 mt-2">12</p>
+        <p class="text-4xl font-bold text-gray-900 mt-2">{{ $totalOrders }}</p>
         <p class="text-sm text-gray-500 mt-1">This month</p>
     </div>
 
